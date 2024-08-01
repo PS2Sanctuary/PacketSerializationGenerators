@@ -1,0 +1,34 @@
+<Project>
+
+    <!-- Build-related properties -->
+    <PropertyGroup>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <!-- NuGet-related properties -->
+    <PropertyGroup>
+        <Authors>Carl Stephens</Authors>
+        <PackageProjectUrl>https://github.com/PS2Sanctuary/PacketSerializationGenerator</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/PS2Sanctuary/PacketSerializationGenerator</RepositoryUrl>
+        <PackageOutputPath>$(MSBuildThisFileDirectory)nuget</PackageOutputPath>
+    </PropertyGroup>
+
+    <!-- Source-link setup -->
+    <PropertyGroup>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <!-- Include symbol files (*.pdb) in the built .nupkg. We prefer this to symbol packages as it's a small library (hence restore time minimal) -->
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+
+    <!-- NuGet-related release properties -->
+    <PropertyGroup Condition="'$(Configuration)'=='Release'">
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <!--<NoWarn>$(NoWarn);1591</NoWarn>-->
+    </PropertyGroup>
+
+</Project>
