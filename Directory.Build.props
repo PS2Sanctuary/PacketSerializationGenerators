@@ -9,9 +9,9 @@
     <!-- NuGet-related properties -->
     <PropertyGroup>
         <Authors>Carl Stephens</Authors>
-        <PackageProjectUrl>https://github.com/PS2Sanctuary/PacketSerializationGenerator</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/PS2Sanctuary/PacketSerializationGenerators</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://github.com/PS2Sanctuary/PacketSerializationGenerator</RepositoryUrl>
+        <RepositoryUrl>https://github.com/PS2Sanctuary/PacketSerializationGenerators</RepositoryUrl>
         <PackageOutputPath>$(MSBuildThisFileDirectory)nuget</PackageOutputPath>
     </PropertyGroup>
 
