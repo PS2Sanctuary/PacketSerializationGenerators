@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 using PacketSerializationGenerators.Abstractions.Stringifiers;
-using PacketSerializationGenerators.Generators.DataPackets;
+using PacketSerializationGenerators.Generators.BinaryPackets;
 using PacketSerializationGenerators.Objects;
 
 namespace PacketSerializationGenerators.Stringifiers.Length;
@@ -15,7 +15,7 @@ public class IDataSerializableLengthStringifier : IPropertyLengthStringifier
 
         foreach (INamedTypeSymbol? @interface in propertySymbol.Type.AllInterfaces)
         {
-            if (@interface.ToDisplayString().StartsWith(DataPacketConstants.IDataSerializableTypeName))
+            if (@interface.ToDisplayString().StartsWith(BinaryPacketConstants.IDataSerializableTypeName))
                 return true;
         }
 

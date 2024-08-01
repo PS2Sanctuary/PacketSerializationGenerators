@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace PacketSerializationGenerators.Generators.DataPackets;
+namespace PacketSerializationGenerators.Generators.BinaryPackets;
 
 [Generator]
 public class DataPacketGenerator : IIncrementalGenerator
@@ -68,10 +68,10 @@ public class DataPacketGenerator : IIncrementalGenerator
                 INamedTypeSymbol attributeContainingTypeSymbol = attributeSymbol.ContainingType;
                 string fullName = attributeContainingTypeSymbol.ToDisplayString();
 
-                if (fullName is DataPacketConstants.LoginDataPacketAttributeTypeName
-                    or DataPacketConstants.GatewayDataPacketAttributeTypeName
-                    or DataPacketConstants.ZoneDataPacketAttributeTypeName
-                    or DataPacketConstants.WeaponDataPacketAttributeTypeName)
+                if (fullName is BinaryPacketConstants.LoginDataPacketAttributeTypeName
+                    or BinaryPacketConstants.GatewayDataPacketAttributeTypeName
+                    or BinaryPacketConstants.ZoneDataPacketAttributeTypeName
+                    or BinaryPacketConstants.WeaponDataPacketAttributeTypeName)
                     return classDeclaration;
             }
         }
@@ -103,22 +103,22 @@ public class DataPacketGenerator : IIncrementalGenerator
             string result;
             string autogenPrefix;
 
-            if (@class.Attributes.TryFindAttribute(DataPacketConstants.LoginDataPacketAttributeTypeName, out _))
+            if (@class.Attributes.TryFindAttribute(BinaryPacketConstants.LoginDataPacketAttributeTypeName, out _))
             {
                 result = LoginPacketStrings.GeneratePacketString(@class, context.ReportDiagnostic);
                 autogenPrefix = "Login";
             }
-            else if (@class.Attributes.TryFindAttribute(DataPacketConstants.GatewayDataPacketAttributeTypeName, out _))
+            else if (@class.Attributes.TryFindAttribute(BinaryPacketConstants.GatewayDataPacketAttributeTypeName, out _))
             {
                 result = GatewayPacketStrings.GeneratePacketString(@class, context.ReportDiagnostic);
                 autogenPrefix = "Gateway";
             }
-            else if (@class.Attributes.TryFindAttribute(DataPacketConstants.ZoneDataPacketAttributeTypeName, out _))
+            else if (@class.Attributes.TryFindAttribute(BinaryPacketConstants.ZoneDataPacketAttributeTypeName, out _))
             {
                 result = ZonePacketStrings.GeneratePacketString(@class, context.ReportDiagnostic);
                 autogenPrefix = "Zone";
             }
-            else if (@class.Attributes.TryFindAttribute(DataPacketConstants.WeaponDataPacketAttributeTypeName, out _))
+            else if (@class.Attributes.TryFindAttribute(BinaryPacketConstants.WeaponDataPacketAttributeTypeName, out _))
             {
                 result = WeaponDataPacketStrings.GeneratePacketString(@class, context.ReportDiagnostic);
                 autogenPrefix = "Zone_Weapon";
@@ -142,9 +142,9 @@ public class DataPacketGenerator : IIncrementalGenerator
         List<ClassToAugment> classesToGenerate = new();
 
         // Get the semantic representation of our marker attribute
-        INamedTypeSymbol? loginDataPacketAttribute = compilation.GetTypeByMetadataName(DataPacketConstants.LoginDataPacketAttributeTypeName);
-        INamedTypeSymbol? gatewayDataPacketAttribute = compilation.GetTypeByMetadataName(DataPacketConstants.GatewayDataPacketAttributeTypeName);
-        INamedTypeSymbol? zoneDataPacketAttribute = compilation.GetTypeByMetadataName(DataPacketConstants.ZoneDataPacketAttributeTypeName);
+        INamedTypeSymbol? loginDataPacketAttribute = compilation.GetTypeByMetadataName(BinaryPacketConstants.LoginDataPacketAttributeTypeName);
+        INamedTypeSymbol? gatewayDataPacketAttribute = compilation.GetTypeByMetadataName(BinaryPacketConstants.GatewayDataPacketAttributeTypeName);
+        INamedTypeSymbol? zoneDataPacketAttribute = compilation.GetTypeByMetadataName(BinaryPacketConstants.ZoneDataPacketAttributeTypeName);
 
         if (loginDataPacketAttribute is null || gatewayDataPacketAttribute is null || zoneDataPacketAttribute is null)
         {

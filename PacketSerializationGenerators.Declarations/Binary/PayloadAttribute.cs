@@ -1,6 +1,6 @@
 using System;
 
-namespace PacketSerializationGenerators.Declarations.Data;
+namespace PacketSerializationGenerators.Declarations.Binary;
 
 /// <summary>
 /// When used on a property of type IDataPacket, indicates that the property should be prefixed with a <c>uint</c> value

@@ -1,6 +1,6 @@
 using System;
 
-namespace PacketSerializationGenerators.Declarations.Data;
+namespace PacketSerializationGenerators.Declarations.Binary;
 
 /// <summary>
 /// Indicates how the decorated string property should be serialized.

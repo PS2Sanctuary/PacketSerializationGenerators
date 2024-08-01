@@ -1,6 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using PacketSerializationGenerators.Abstractions.Stringifiers;
-using PacketSerializationGenerators.Generators.DataPackets;
+using PacketSerializationGenerators.Generators.BinaryPackets;
 using PacketSerializationGenerators.Objects;
 
 namespace PacketSerializationGenerators.Stringifiers.Length;
@@ -23,7 +23,7 @@ public class StringLengthStringifier : IPropertyLengthStringifier
 
         propertySymbol.TryFindAttribute
         (
-            DataPacketConstants.StringSerializationAttributeTypeName,
+            BinaryPacketConstants.StringSerializationAttributeTypeName,
             out AttributeData? attribute
         );
 

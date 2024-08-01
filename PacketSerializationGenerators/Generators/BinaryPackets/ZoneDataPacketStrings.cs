@@ -4,7 +4,7 @@ using PacketSerializationGenerators.Objects;
 using System;
 using static PacketSerializationGenerators.Constants;
 
-namespace PacketSerializationGenerators.Generators.DataPackets;
+namespace PacketSerializationGenerators.Generators.BinaryPackets;
 
 public class ZoneDataPacketStrings : BaseDataPacketStrings
 {
@@ -21,8 +21,7 @@ public class ZoneDataPacketStrings : BaseDataPacketStrings
 
         return $@"#nullable enable
 
-using Sanctuary.Core.Abstractions;
-using {DataPacketConstants.DeclarationsNamespace};
+using {BinaryPacketConstants.DeclarationsNamespace};
 using Sanctuary.Zone.Util;
 using System;
 
@@ -91,7 +90,7 @@ public partial class {c.Name} : IDataPacket<{c.Name}>
             : 0;
         ";
 
-        if (!c.Attributes.TryFindAttribute(DataPacketConstants.LZ4CompressedAttributeTypeName, out _))
+        if (!c.Attributes.TryFindAttribute(BinaryPacketConstants.LZ4CompressedAttributeTypeName, out _))
             return;
 
         deserializeString += $@"

@@ -1,5 +1,5 @@
 using Microsoft.CodeAnalysis;
-using PacketSerializationGenerators.Generators.DataPackets;
+using PacketSerializationGenerators.Generators.BinaryPackets;
 
 // ReSharper disable once CheckNamespace
 namespace PacketSerializationGenerators.Extensions;
@@ -13,13 +13,13 @@ public static class ITypeSymbolExtensions
 
         foreach (AttributeData attr in typeSymbol.GetAttributes())
         {
-            if (attr.AttributeClass?.BaseType?.ToDisplayString() is DataPacketConstants.BaseDataPacketAttributeTypeName)
+            if (attr.AttributeClass?.BaseType?.ToDisplayString() is BinaryPacketConstants.BaseDataPacketAttributeTypeName)
                 return true;
         }
 
         foreach (INamedTypeSymbol? @interface in typeSymbol.AllInterfaces)
         {
-            if (@interface.ToDisplayString().StartsWith(DataPacketConstants.IDataPacketTypeName))
+            if (@interface.ToDisplayString().StartsWith(BinaryPacketConstants.IDataPacketTypeName))
                 return true;
         }
 

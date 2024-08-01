@@ -1,7 +1,7 @@
 using Microsoft.CodeAnalysis;
 using PacketSerializationGenerators.Extensions;
 using PacketSerializationGenerators.Abstractions.Stringifiers;
-using PacketSerializationGenerators.Generators.DataPackets;
+using PacketSerializationGenerators.Generators.BinaryPackets;
 using PacketSerializationGenerators.Objects;
 using System;
 using static PacketSerializationGenerators.Constants;
@@ -72,7 +72,7 @@ public class StringBinarySerializationStringifier : IPropertyBinarySerialization
 
         propertySymbol.TryFindAttribute
         (
-            DataPacketConstants.StringSerializationAttributeTypeName,
+            BinaryPacketConstants.StringSerializationAttributeTypeName,
             out AttributeData? attribute
         );
 
@@ -130,7 +130,7 @@ public class StringBinarySerializationStringifier : IPropertyBinarySerialization
 
         propertySymbol.TryFindAttribute
         (
-            DataPacketConstants.StringSerializationAttributeTypeName,
+            BinaryPacketConstants.StringSerializationAttributeTypeName,
             out AttributeData? attribute
         );
 

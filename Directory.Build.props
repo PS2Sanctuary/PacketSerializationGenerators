@@ -28,7 +28,6 @@
     <PropertyGroup Condition="'$(Configuration)'=='Release'">
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <!--<NoWarn>$(NoWarn);1591</NoWarn>-->
     </PropertyGroup>
 
 </Project>

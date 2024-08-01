@@ -1,9 +1,9 @@
-﻿namespace PacketSerializationGenerators.Generators.DataPackets;
+﻿namespace PacketSerializationGenerators.Generators.BinaryPackets;
 
-public static class DataPacketConstants
+public static class BinaryPacketConstants
 {
-    public const string IDataPacketTypeName = "Sanctuary.Core.Abstractions.IDataPacket";
-    public const string DeclarationsNamespace = "Sanctuary.SourceGeneration.Declarations.Data";
+    public const string IDataPacketTypeName = "PacketSerializationGenerators.Declarations.Binary.IDataPacket";
+    public const string DeclarationsNamespace = "PacketSerializationGenerators.Declarations.Binary";
     public const string IDataSerializableTypeName = $"{DeclarationsNamespace}.IDataSerializable";
     public const string PayloadAttributeTypeName = $"{DeclarationsNamespace}.PayloadAttribute";
     public const string BaseDataPacketAttributeTypeName = $"{DeclarationsNamespace}.BaseDataPacketAttribute";

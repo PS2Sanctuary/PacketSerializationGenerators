@@ -1,7 +1,7 @@
 using Microsoft.CodeAnalysis;
 using PacketSerializationGenerators.Extensions;
 using PacketSerializationGenerators.Abstractions.Stringifiers;
-using PacketSerializationGenerators.Generators.DataPackets;
+using PacketSerializationGenerators.Generators.BinaryPackets;
 using PacketSerializationGenerators.Objects;
 using System;
 using static PacketSerializationGenerators.Constants;
@@ -70,7 +70,7 @@ public class DataPacketBinarySerializationStringifier : IPropertyBinarySerializa
         string result = @"
         ";
 
-        if (propertySymbol.TryFindAttribute(DataPacketConstants.PayloadAttributeTypeName, out _))
+        if (propertySymbol.TryFindAttribute(BinaryPacketConstants.PayloadAttributeTypeName, out _))
         {
             string payloadLengthName = tempPropName.Trim('@') + "PayloadLength";
             MyPropertySymbol lengthSymbol = new(payloadLengthName, SpecialType.System_UInt32);
@@ -110,7 +110,7 @@ public class DataPacketBinarySerializationStringifier : IPropertyBinarySerializa
 
         string result = string.Empty;
 
-        bool hasPayloadAttribute = propertySymbol.TryFindAttribute(DataPacketConstants.PayloadAttributeTypeName, out _);
+        bool hasPayloadAttribute = propertySymbol.TryFindAttribute(BinaryPacketConstants.PayloadAttributeTypeName, out _);
 
         if (!hasPayloadAttribute)
         {
@@ -131,12 +131,13 @@ public class DataPacketBinarySerializationStringifier : IPropertyBinarySerializa
                         """;
             MyPropertySymbol lengthSymbol = new("0", SpecialType.System_UInt32);
             result += _integerBinarySerializer.GetSerializationString(lengthSymbol);
-            result += "}";
+            result += "        }";
         }
 
         result += """
                   
-                          else {
+                          else
+                          {
                   """;
         // Reserve space for the payload length
         if (hasPayloadAttribute)
@@ -155,7 +156,7 @@ public class DataPacketBinarySerializationStringifier : IPropertyBinarySerializa
                    """;
 
         // Write the payload length
-        if (propertySymbol.TryFindAttribute(DataPacketConstants.PayloadAttributeTypeName, out _))
+        if (propertySymbol.TryFindAttribute(BinaryPacketConstants.PayloadAttributeTypeName, out _))
         {
             result += $"""
                        

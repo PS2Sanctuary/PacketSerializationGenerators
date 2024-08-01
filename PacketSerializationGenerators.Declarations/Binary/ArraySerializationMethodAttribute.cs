@@ -1,6 +1,6 @@
 using System;
 
-namespace PacketSerializationGenerators.Declarations.Data;
+namespace PacketSerializationGenerators.Declarations.Binary;
 
 /// <summary>
 /// Controls how the decorated array property is de/serialized to binary.

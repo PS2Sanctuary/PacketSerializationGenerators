@@ -1,7 +1,7 @@
 using Microsoft.CodeAnalysis;
 using PacketSerializationGenerators.Extensions;
 using PacketSerializationGenerators.Abstractions.Stringifiers;
-using PacketSerializationGenerators.Generators.DataPackets;
+using PacketSerializationGenerators.Generators.BinaryPackets;
 using PacketSerializationGenerators.Objects;
 
 namespace PacketSerializationGenerators.Stringifiers.Length;
@@ -24,7 +24,7 @@ public class DataPacketLengthStringifier : IPropertyLengthStringifier
 
         string result = string.Empty;
 
-        if (propertySymbol.TryFindAttribute(DataPacketConstants.PayloadAttributeTypeName, out _))
+        if (propertySymbol.TryFindAttribute(BinaryPacketConstants.PayloadAttributeTypeName, out _))
             result += $"""
                        {Constants.DefaultSizeVariableName} += sizeof(uint); // Payload length variable
                                

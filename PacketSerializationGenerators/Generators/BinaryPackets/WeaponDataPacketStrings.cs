@@ -4,9 +4,9 @@ using PacketSerializationGenerators.Objects;
 using System;
 using static PacketSerializationGenerators.Constants;
 
-namespace PacketSerializationGenerators.Generators.DataPackets;
+namespace PacketSerializationGenerators.Generators.BinaryPackets;
 
-public class LoginDataPacketStrings : BaseDataPacketStrings
+public class WeaponDataPacketStrings : BaseDataPacketStrings
 {
     public override string GeneratePacketString(ClassToAugment c, Action<Diagnostic> reportDiagnostic)
     {
@@ -21,17 +21,20 @@ public class LoginDataPacketStrings : BaseDataPacketStrings
 
         return $@"#nullable enable
 
-using Sanctuary.Core.Abstractions;
-using {DataPacketConstants.DeclarationsNamespace};
+using Sanctuary.Zone.Abstractions;
+using {BinaryPacketConstants.DeclarationsNamespace};
 using System;
 
 namespace {c.Namespace};
 
 /// <summary>
-/// Represents a <see cref=""{c.Name}""/> login data packet.
+/// Represents a <see cref=""{c.Name}""/> weapon data packet.
 /// </summary>
-public partial class {c.Name} : IDataPacket<{c.Name}>
+public partial class {c.Name} : IWeaponPacket, IDataPacket<{c.Name}>
 {{
+    /// <inheritdoc />
+    public uint GameTime {{ get; set; }}
+
     /// <summary>
     /// Initializes a new instance of the <see cref=""{c.Name}""/> class.
     /// </summary>

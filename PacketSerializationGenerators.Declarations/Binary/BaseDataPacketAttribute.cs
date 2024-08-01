@@ -1,6 +1,6 @@
 using System;
 
-namespace PacketSerializationGenerators.Declarations.Data;
+namespace PacketSerializationGenerators.Declarations.Binary;
 
 /// <summary>
 /// Indicates that the decorated class should be extended with source-generated serialization logic for data packets.

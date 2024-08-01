@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static PacketSerializationGenerators.Constants;
 
-namespace PacketSerializationGenerators.Generators.DataPackets;
+namespace PacketSerializationGenerators.Generators.BinaryPackets;
 
 public abstract class BaseDataPacketStrings
 {
@@ -70,18 +70,24 @@ public abstract class BaseDataPacketStrings
         out string serializeString
     )
     {
-        deserializeString = $@"int {DefaultOffsetVariableName} = readOPCode ? sizeof({opCodeEnumSymbol.EnumUnderlyingType}) : 0;
-        ";
-        requiredBufferSizeString = $@"includeOPCode ? sizeof({opCodeEnumSymbol.EnumUnderlyingType}) : 0;
-        ";
+        deserializeString = $"""
+                             int {DefaultOffsetVariableName} = readOPCode ? sizeof({opCodeEnumSymbol.EnumUnderlyingType}) : 0;
+                                     
+                             """;
+        requiredBufferSizeString = $"""
+                                    includeOPCode ? sizeof({opCodeEnumSymbol.EnumUnderlyingType}) : 0;
+                                            
+                                    """;
 
         MyPropertySymbol enumPropSymbol = new(opCodeSymbol);
-        serializeString = $@"int {DefaultOffsetVariableName} = 0;
-        if (writeOPCode)
-        {{
-            {_ibss.GetSerializationString(enumPropSymbol)}
-        }}
-        ";
+        serializeString = $$"""
+                            int {{DefaultOffsetVariableName}} = 0;
+                                    if (writeOPCode)
+                                    {
+                                        {{_ibss.GetSerializationString(enumPropSymbol)}}
+                                    }
+                                    
+                            """;
     }
 
     protected virtual void GenerateFunctionStrings
@@ -109,7 +115,7 @@ public abstract class BaseDataPacketStrings
             return;
         }
 
-        if (opCodeSymbol.Type is not INamedTypeSymbol { EnumUnderlyingType: { } } opCodeEnumSymbol)
+        if (opCodeSymbol.Type is not INamedTypeSymbol { EnumUnderlyingType: not null } opCodeEnumSymbol)
         {
             Diagnostic d = Diagnostic.Create
             (
@@ -199,16 +205,20 @@ public abstract class BaseDataPacketStrings
 
         foreach (IPropertySymbol prop in c.Properties)
         {
-            ctorParamAssignments += $@"{prop.Name.ToSafeLowerCamel()},
-            ";
+            ctorParamAssignments += $"""
+                                     {prop.Name.ToSafeLowerCamel()},
+                                                 
+                                     """;
         }
 
-        input += $@"
-        amountRead = {DefaultOffsetVariableName};
-        return new {c.Name}
-        (
-            {ctorParamAssignments.CleanGeneratorString()}
-        );";
+        input += $"""
+                  
+                          amountRead = {DefaultOffsetVariableName};
+                          return new {c.Name}
+                          (
+                              {ctorParamAssignments.CleanGeneratorString()}
+                          );
+                  """;
 
         return input;
     }
@@ -225,25 +235,33 @@ public abstract class BaseDataPacketStrings
             if (prop.Type.TypeKind is TypeKind.Array)
             {
                 IArrayTypeSymbol arrayType = (IArrayTypeSymbol)prop.Type;
-                parameterList += $@"{arrayType.ElementType.ToDisplayString()}[] {paramName},
-        ";
+                parameterList += $"""
+                                  {arrayType.ElementType.ToDisplayString()}[] {paramName},
+                                          
+                                  """;
             }
             else
             {
-                parameterList += $@"{prop.Type.ToDisplayString()} {paramName},
-        ";
+                parameterList += $"""
+                                  {prop.Type.ToDisplayString()} {paramName},
+                                          
+                                  """;
             }
 
-            propertyAssignmentList += $@"{prop.Name} = {paramName};
-        ";
+            propertyAssignmentList += $"""
+                                       {prop.Name} = {paramName};
+                                               
+                                       """;
         }
 
-        return $@"public {c.Name}
-    (
-        {parameterList.CleanGeneratorString()}
-    )
-    {{
-        {propertyAssignmentList.CleanGeneratorString()}
-    }}";
+        return $$"""
+                 public {{c.Name}}
+                     (
+                         {{parameterList.CleanGeneratorString()}}
+                     )
+                     {
+                         {{propertyAssignmentList.CleanGeneratorString()}}
+                     }
+                 """;
     }
 }

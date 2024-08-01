@@ -4,9 +4,9 @@ using PacketSerializationGenerators.Objects;
 using System;
 using static PacketSerializationGenerators.Constants;
 
-namespace PacketSerializationGenerators.Generators.DataPackets;
+namespace PacketSerializationGenerators.Generators.BinaryPackets;
 
-public class GatewayDataPacketStrings : BaseDataPacketStrings
+public class LoginDataPacketStrings : BaseDataPacketStrings
 {
     public override string GeneratePacketString(ClassToAugment c, Action<Diagnostic> reportDiagnostic)
     {
@@ -21,19 +21,16 @@ public class GatewayDataPacketStrings : BaseDataPacketStrings
 
         return $@"#nullable enable
 
-using Sanctuary.Core.Abstractions;
-using {DataPacketConstants.DeclarationsNamespace};
+using {BinaryPacketConstants.DeclarationsNamespace};
 using System;
 
 namespace {c.Namespace};
 
 /// <summary>
-/// Represents a <see cref=""{c.Name}""/> gateway data packet.
+/// Represents a <see cref=""{c.Name}""/> login data packet.
 /// </summary>
 public partial class {c.Name} : IDataPacket<{c.Name}>
 {{
-    public byte Channel {{ get; init; }}
-
     /// <summary>
     /// Initializes a new instance of the <see cref=""{c.Name}""/> class.
     /// </summary>
@@ -57,33 +54,9 @@ public partial class {c.Name} : IDataPacket<{c.Name}>
     {{
         {serializeString.CleanGeneratorString()}
 
-        {DefaultBufferVariableName}[0] |= (byte)(Channel << 5);
         return {DefaultOffsetVariableName};
     }}
 }}
 ";
-    }
-
-    protected override string FinaliseDeserializeString(string input, ClassToAugment c)
-    {
-        string ctorParamAssignments = string.Empty;
-
-        foreach (IPropertySymbol prop in c.Properties)
-        {
-            ctorParamAssignments += $@"{prop.Name.ToSafeLowerCamel()},
-            ";
-        }
-
-        input += $@"
-        amountRead = {DefaultOffsetVariableName};
-        return new {c.Name}
-        (
-            {ctorParamAssignments.CleanGeneratorString()}
-        )
-        {{
-            Channel = (byte)({DefaultBufferVariableName}[0] >> 5)
-        }};";
-
-        return input;
     }
 }

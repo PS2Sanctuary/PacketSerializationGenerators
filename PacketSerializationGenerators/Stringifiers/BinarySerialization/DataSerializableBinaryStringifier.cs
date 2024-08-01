@@ -1,7 +1,7 @@
 using Microsoft.CodeAnalysis;
 using PacketSerializationGenerators.Extensions;
 using PacketSerializationGenerators.Abstractions.Stringifiers;
-using PacketSerializationGenerators.Generators.DataPackets;
+using PacketSerializationGenerators.Generators.BinaryPackets;
 using PacketSerializationGenerators.Objects;
 using static PacketSerializationGenerators.Constants;
 
@@ -42,7 +42,7 @@ public class DataSerializableBinaryStringifier : IPropertyBinarySerializationStr
 
         foreach (INamedTypeSymbol? @interface in propertySymbol.Type.AllInterfaces)
         {
-            if (@interface.ToDisplayString().StartsWith(DataPacketConstants.IDataSerializableTypeName))
+            if (@interface.ToDisplayString().StartsWith(BinaryPacketConstants.IDataSerializableTypeName))
                 return true;
         }
 
